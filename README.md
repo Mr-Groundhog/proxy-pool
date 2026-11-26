@@ -63,7 +63,7 @@ upstream you care about changes the yield from **0% to ~18%** in our tests.
 
 | 中文 | English |
 |---|---|
-| 🔄 定时抓取 17 个公开源，自动去重 | Scheduled scraping of 17 public sources with dedup |
+| 🔄 定时抓取 45 个公开源，自动去重 | Scheduled scraping of 45 public sources with dedup |
 | 🔬 严格测活：回显校验 + 随机 nonce 防缓存 + 透明代理识别 | Strict verification: echo check + nonce + transparent-proxy detection |
 | 🎯 **真实目标探测**：直接打 `api.openai.com`，401/200 才算可用 | **Real-target probe**: 401/200 from `api.openai.com` means usable |
 | 🏠 住宅 / 机房自动分类（ip-api ASN） | Residential / datacenter auto-classification via ASN |
@@ -97,6 +97,20 @@ upstream you care about changes the yield from **0% to ~18%** in our tests.
 | **roosterkid** | https | `raw.githubusercontent.com/roosterkid/openproxylist` | 每小时 |
 | **proxyspace** | http / https / socks5 | `proxyspace.pro/{http,https,socks5}.txt` | 持续更新 |
 | **spys.me** | http | `spys.me/proxy.txt` | 持续更新 |
+| **ProxyScraper** | http / socks5 | `raw.githubusercontent.com/ProxyScraper/ProxyScraper/main/{http,socks4,socks5}.txt` | 每 30 分钟 |
+| **prxchk** | http / socks5 | `raw.githubusercontent.com/prxchk/proxy-list/main/{http,socks4,socks5}.txt` | 频繁更新 |
+| **sunny9577** | http / socks5 | `cdn.jsdelivr.net/gh/sunny9577/proxy-scraper/generated/*_proxies.txt` | 自动抓取 |
+| **TheSpeedX (SOCKS-List)** | http / socks5 | `raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/{http,socks4,socks5}.txt` | 每天 |
+| **databay-labs** | http / socks5 | `cdn.jsdelivr.net/gh/databay-labs/free-proxy-list/{http,socks5}.txt` | 备份源 |
+| **Anonym0usWork1221** | http / socks5 | `cdn.jsdelivr.net/gh/Anonym0usWork1221/Free-Proxies/proxy_files/*_proxies.txt` | 大列表 |
+| **ALIILAPRO** | http / socks5 | `cdn.jsdelivr.net/gh/ALIILAPRO/Proxy/{http,socks4}.txt` | 持续更新 |
+| **Zaeem20** | http / socks5 | `cdn.jsdelivr.net/gh/Zaeem20/FREE_PROXIES_LIST/{http,socks4}.txt` | 持续更新 |
+| **hookzof** | socks5 | `cdn.jsdelivr.net/gh/hookzof/socks5_list/proxy.txt` | socks5 专用 |
+| **proxy4parsing** | http / socks5 | `cdn.jsdelivr.net/gh/proxy4parsing/proxy-list/{http,socks5}.txt` | 持续更新 |
+| **monosans (socks4)** | socks5* | `raw.githubusercontent.com/monosans/proxy-list/main/proxies/socks4.txt` | 每小时复检 |
+| **vakhov (jsDelivr)** | http / socks5 | `cdn.jsdelivr.net/gh/vakhov/fresh-proxy-list/{http,socks4,socks5}.txt` | 每小时 |
+
+> `*` 标注的 socks4 列表沿用 GoProxy 的映射，按 socks5 协议入池；实际能否使用由测活阶段决定。新增源来自 [isboyjc/GoProxy](https://github.com/isboyjc/GoProxy) 的公开列表。
 
 ### API 源 / API sources
 
@@ -242,7 +256,7 @@ curl -X POST http://HOST:8787/api/report \
    ┌──────────────────────────────────────────────────────┐
    │  Scheduler (every 30 min)                            │
    │        ↓                                             │
-   │  17 sources ──→ dedup ──→ 2 paths:                   │
+    │  45 sources ──→ dedup ──→ 2 paths:                   │
    │                    ├─ A: strict check (httpbin+TLS)  │
    │                    └─ B: direct OpenAI probe  🎯     │
    │        ↓                                             │
